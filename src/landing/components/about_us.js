@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Dialog } from '@headlessui/react'
-import "./home.css"
+import "../pages/home.css"
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon ,ServerIcon} from '@heroicons/react/24/outline'
-import block from "./images/Doc.png"
-import AnchorLink from 'react-anchor-link-smooth-scroll'
-import logo from "./images/Logo.png"
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-export default function about_us() {
+
+export default function About_us() {
     return(
         <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
       <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -40,8 +36,7 @@ export default function about_us() {
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:pr-4">
             <div className="lg:max-w-lg">
-              <p className="text-base font-semibold leading-7 text-indigo-600">Deploy faster</p>
-              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">A better workflow</h1>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">About Us</h1>
               <p className="mt-6 text-xl leading-8 text-gray-700">
                 Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem. At arcu, sit dui mi, nibh dui, diam
                 eget aliquam. Quisque id at vitae feugiat egestas.

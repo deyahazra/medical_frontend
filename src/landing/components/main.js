@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Dialog } from '@headlessui/react'
-import "./home.css"
-import block from "./images/Doc.png"
-import AnchorLink from 'react-anchor-link-smooth-scroll'
-import logo from "./images/Logo.png"
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-const main = () => {
+import "../pages/home.css"
+import block from "../../images/Doc.png"
+const Main = () => {
     return (
         <div className="bg-white main">
       <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
@@ -19,7 +15,7 @@ const main = () => {
             
           </svg>
           <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
-            <h1 className="text-3xl font-bold tracking-tight text-black sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-tight text-black sm:text-4xl mobfont">
               MEDX
             </h1>
             <p className="mt-6 text-lg leading-8 text-black">
@@ -51,4 +47,4 @@ const main = () => {
     )
 
 }
-export default main;
+export default Main;

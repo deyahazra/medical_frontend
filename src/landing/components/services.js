@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Dialog } from '@headlessui/react'
-import "./home.css"
+import "../pages/home.css"
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline'
-import block from "./images/Doc.png"
-import AnchorLink from 'react-anchor-link-smooth-scroll'
-import logo from "./images/Logo.png"
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 const features = [
     {
       name: 'Push to deploy',
@@ -33,14 +28,13 @@ const features = [
       icon: FingerPrintIcon,
     },
   ]
-const services = () => {
+const Services = () => {
     return(
         <div className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-base font-semibold leading-7 text-indigo-600">Deploy faster</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Everything you need to deploy your app
+            Services we provide
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             Quis tellus eget adipiscing convallis sit sit eget aliquet quis. Suspendisse eget egestas a elementum
@@ -68,4 +62,4 @@ const services = () => {
     </div>
     )
 }
-export default services ;
+export default Services ;

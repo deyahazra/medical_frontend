@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from '@headlessui/react'
 import "./home.css"
-import main from "./main";
-import services from "./services";
-import Contact from "./contact";
-import about_us from "./about_us";
+import Main from "../components/main";
+import Services from "../components/services";
+import Contact from "../components/contact";
+import Team from "../components/team";
+import About_us from "../components/about_us";
 import AnchorLink from 'react-anchor-link-smooth-scroll'
-import logo from "./images/Logo.png"
+import logo from "../../images/Logo.png"
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 const navigation = [
     { name: 'Home', href: '#main' },
@@ -48,13 +49,13 @@ const Home = () => {
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
-              <AnchorLink key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
+              <AnchorLink key={item.name} href={item.href} className="text-sm font-semibold navi leading-6 text-gray-900">
                 {item.name}
               </AnchorLink>
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+            <a href="#" className="text-sm font-semibold leading-6 text-gray-900 navi">
               Log in <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
@@ -67,7 +68,7 @@ const Home = () => {
                 <span className="sr-only">Your Company</span>
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  src={logo}
                   alt=""
                 />
               </a>
@@ -106,27 +107,27 @@ const Home = () => {
           </Dialog.Panel>
         </Dialog>
       </header>
-      <div>{main()}</div>
+      <div>{Main()}</div>
     </div>
     </section>
     <section id='about_us'>
       <div className="about_us">
-      <div>{about_us()}</div>
+      <div>{About_us()}</div>
         </div>
     </section>
     <section id='services'>
       <div className="services">
-      <div>{services()}</div>
-        </div>
-    </section>
-    <section id='team'>
-      <div className="team">
-      Team
+      <div>{Services()}</div>
         </div>
     </section>
     <section id='contact'>
       <div className="contact">
       <div>{Contact()}</div>
+        </div>
+    </section>
+    <section id='team'>
+      <div className="team">
+      <div>{Team()}</div>
         </div>
     </section>
     </div>
