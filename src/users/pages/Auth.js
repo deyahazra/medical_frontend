@@ -110,9 +110,9 @@ export default function SignInSide() {
           item
           xs={false}
           sm={4}
-          md={6}
+          md={7.5}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+            backgroundImage: isLoginMode? 'url(https://cdn.dribbble.com/users/2200056/screenshots/11415019/media/e59d2e1588af14e09632b0f88eeedef1.jpg)': 'url(https://cdn.dribbble.com/users/2200056/screenshots/11415019/media/e59d2e1588af14e09632b0f88eeedef1.jpg)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -120,7 +120,7 @@ export default function SignInSide() {
             backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={4.5} component={Paper} elevation={6} square>
           <Box
             sx={{
               my: 8,
@@ -134,7 +134,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+            {isLoginMode ? "Log In" : "Sign Up"}
             </Typography>
             <Box component="form" sx={{ mt: 1 }}>
                 {!isLoginMode &&
@@ -187,7 +187,7 @@ export default function SignInSide() {
               <Grid container>
                 <Grid item>
                   <a className='to-signup' onClick={switchModeHandler}>
-                    {"Don't have an account? Sign Up"}
+                    {isLoginMode?"Don't have an account? Sign Up":"Already have an account? Log In"}
                   </a>
                 </Grid>
               </Grid>

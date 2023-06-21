@@ -9,7 +9,8 @@
   }
   
   .form-control label {
-    font-weight: bold;
+    color: rgb(101, 100, 100);
+    font-size: small;
     margin-bottom: 0.5rem;
   }
   
@@ -20,6 +21,7 @@
     border: 1px solid #ccc;
     background: #f8f8f8;
     padding: 0.15rem 0.25rem;
+    border-radius: 10px;
   }
   
   .form-control input:focus,
