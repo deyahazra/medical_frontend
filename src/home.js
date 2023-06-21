@@ -5,7 +5,6 @@ import "./home.css"
 import main from "./main";
 import services from "./services";
 import Contact from "./contact";
-import block from "./images/Doc.png"
 import about_us from "./about_us";
 import AnchorLink from 'react-anchor-link-smooth-scroll'
 import logo from "./images/Logo.png"
