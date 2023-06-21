@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { Dialog } from '@headlessui/react'
 import "./home.css"
 import Main from "../components/main";
@@ -10,16 +9,18 @@ import About_us from "../components/about_us";
 import AnchorLink from 'react-anchor-link-smooth-scroll'
 import logo from "../../images/Logo.png"
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { AuthContext } from "../../shared/context/auth-context";
 const navigation = [
-    { name: 'Home', href: '#main' },
-    { name: 'About us', href: '#about_us' },
-    { name: 'Services', href: '#services' },
-    { name: 'Team', href: '#team' },
-    { name: 'Doctors', href: '#things' },
-    { name: 'Contact us', href: '#contact' },
+    {key:1, name: 'Home', href: '#main' },
+    {key:2, name: 'About us', href: '#about_us' },
+    {key:3, name: 'Services', href: '#services' },
+    {key:4, name: 'Team', href: '#team' },
+    {key:5, name: 'Doctors', href: '#things' },
+    {key:6, name: 'Contact us', href: '#contact' },
   ]
 const Home = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const auth = React.useContext(AuthContext);
 
   return (
     <div>
@@ -55,8 +56,8 @@ const Home = () => {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm font-semibold leading-6 text-gray-900 navi">
-              Log in <span aria-hidden="true">&rarr;</span>
+            <a href="/auth" className="text-sm font-semibold leading-6 text-gray-900 navi">
+              {!auth.isLoggedIn ? 'Sign in' : 'Dashboard'} <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
         </nav>

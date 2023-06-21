@@ -10,6 +10,7 @@ import ssr from "../../images/ssr_pic.jpg"
 import EmailIcon from '@mui/icons-material/Email';
 const people = [
     {
+      id: 1,
       name: 'Deya Hazra',
       role: 'Co-Founder / CEO',
       hrefG: 'https://github.com/deyahazra',
@@ -18,6 +19,7 @@ const people = [
       imageUrl: deya
     },
     {
+        id: 2,
         name: 'Utsav Das',
         role: 'Co-Founder / CEO',
         hrefG: 'https://github.com/utsavdas10',
@@ -26,6 +28,7 @@ const people = [
         imageUrl: utsav,
       },
       {
+        id: 3,
         name: 'Swapnodip Singha Roy',
         role: 'Co-Founder / CEO',
         hrefG: 'https://github.com/iamssr02',
@@ -34,6 +37,7 @@ const people = [
         imageUrl:ssr
       },
       {
+        id: 4,
         name: 'Sagnik Singha',
         role: 'Co-Founder / CEO',
         hrefG: 'https://github.com/deyahazra',
@@ -47,7 +51,7 @@ const people = [
 export default function Team  () {
     return (
         <div className="team py-24 sm:py-32">
-      <div className="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
+        <div className="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
         <div className="max-w-2xl">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Meet our Team</h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
@@ -58,7 +62,7 @@ export default function Team  () {
         <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
           {people.map((person) => (
             <div className="member">
-            <li key={person.name}>
+            <li key={person.id}>
               <div className="flex items-center gap-x-6">
                 <img className="h-16 w-16 rounded-full" src={person.imageUrl} alt="" />
                 <div>

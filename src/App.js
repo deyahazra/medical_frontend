@@ -1,18 +1,52 @@
 import './App.css';
 import {
   BrowserRouter as Router,
-  Routes,
   Route,
-  Navigate,
-} from "react-router-dom";
+  Redirect,
+  Switch
+} from 'react-router-dom';
+
 import Home from './landing/pages/home';
+import Auth from './users/pages/Auth';
+import { AuthContext } from './shared/context/auth-context';
+import { useAuth } from './shared/components/hooks/auth-hook';
+
 function App() {
+  const { token, login, logout, userId } = useAuth();
+  let routes;
+
+  if (token) {
+    routes = (
+      <Switch>
+        <Route path="/" exact> <Home /> </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  } 
+  else {
+    routes = (
+      <Switch>
+        <Route path="/" exact> <Home /> </Route>
+        <Route path="/auth" exact> <Auth /> </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
+
   return (
-    <>
-    <Routes>
-      <Route path='/' element={<Home/>}></Route>
-      </Routes>
-  </>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: !!token,
+        token: token,
+        userId: userId,
+        login: login,
+        logout: logout
+      }}
+    >
+      <Router>
+          <main>{routes}</main>
+      </Router>
+    </AuthContext.Provider>
   );
 }
 
