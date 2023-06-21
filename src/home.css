@@ -3,19 +3,24 @@
 }
 .boxing{
     /* display: inline-block; */
-    width: 50%;
-    margin-top: 10px;
+    width: 80%;
+    position: relative;
+    left:8rem;
     /* margin-left: 10px; */
     background-color: #A3D3FF;
     /* Picture/Big */
 }
 @media (max-width: 518px) {
     .remove {
+        margin-top: 10px;
         display:none;
     }
 }
+.main{
+    padding-right: 0px;
+}
 .about_us{
-    background-color: #A3D3FF;
+    background-color: ivory;
 }
 .services{
     background-color: #A3D3FF;
