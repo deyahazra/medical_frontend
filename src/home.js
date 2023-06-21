@@ -2,20 +2,28 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from '@headlessui/react'
 import "./home.css"
+import main from "./main";
+import services from "./services";
+import Contact from "./contact";
 import block from "./images/Doc.png"
+import about_us from "./about_us";
+import AnchorLink from 'react-anchor-link-smooth-scroll'
 import logo from "./images/Logo.png"
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 const navigation = [
-    { name: 'Home', href: '#' },
-    { name: 'About us', href: '#' },
-    { name: 'Services', href: '#' },
-    { name: 'Doctors', href: '#' },
-    { name: 'Contact us', href: '#' },
+    { name: 'Home', href: '#main' },
+    { name: 'About us', href: '#about_us' },
+    { name: 'Services', href: '#services' },
+    { name: 'Team', href: '#team' },
+    { name: 'Doctors', href: '#things' },
+    { name: 'Contact us', href: '#contact' },
   ]
 const Home = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
+    <div>
+      <section id='main'>
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -41,9 +49,9 @@ const Home = () => {
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
+              <AnchorLink key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
                 {item.name}
-              </a>
+              </AnchorLink>
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -99,48 +107,29 @@ const Home = () => {
           </Dialog.Panel>
         </Dialog>
       </header>
-
-      
-      <div className="bg-white">
-      <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
-        <div className="relative isolate overflow-hidden bg-slate-100 px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
-          <svg
-            viewBox="0 0 1024 1024"
-            className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
-            aria-hidden="true"
-          >
-            
-          </svg>
-          <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
-            <h1 className="text-3xl font-bold tracking-tight text-black sm:text-4xl">
-              MEDX
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-black">
-              We care for your health. We are here to help you.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-              <a
-                href="#"
-                className="rounded-md bg-rose-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-rose-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                CREATE ACCOUNT
-              </a>
-              <a href="#" className="text-sm font-semibold leading-6 text-black">
-                Learn more <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-          <div className="boxing">
-            
-            <img
-              
-              src= {block}
-              alt="Block"
-            />
-          </div>
-        </div>
-      </div>
+      <div>{main()}</div>
     </div>
+    </section>
+    <section id='about_us'>
+      <div className="about_us">
+      <div>{about_us()}</div>
+        </div>
+    </section>
+    <section id='services'>
+      <div className="services">
+      <div>{services()}</div>
+        </div>
+    </section>
+    <section id='team'>
+      <div className="team">
+      Team
+        </div>
+    </section>
+    <section id='contact'>
+      <div className="contact">
+      <div>{Contact()}</div>
+        </div>
+    </section>
     </div>
   )
 }
