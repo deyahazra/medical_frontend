@@ -1,5 +1,6 @@
 import React from "react";
 import { AuthContext } from "../../shared/context/auth-context";
+import { Link } from "react-router-dom";
 import "../pages/home.css"
 import block from "../../images/Doc.png"
 const Main = () => {
@@ -23,12 +24,13 @@ const Main = () => {
               We care for your health. We are here to help you.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start clean">
+              <Link to="/auth">
               <a
-                href="/auth"
                 className="rounded-md bg-rose-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-rose-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 {!auth.isLoggedIn?"CREATE ACCOUNT":"DASHBOARD"}
               </a>
+              </Link> 
               <a href="#" className="text-sm font-semibold leading-6 text-black">
                 Learn more <span aria-hidden="true">→</span>
               </a>

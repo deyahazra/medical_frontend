@@ -27,7 +27,7 @@ function App() {
     routes = (
       <Switch>
         <Route path="/" exact> <Home /> </Route>
-        <Route path="/auth" exact> <Auth /> </Route>
+        <Route path="/auth"> <Auth /> </Route>
         <Redirect to="/" />
       </Switch>
     );
