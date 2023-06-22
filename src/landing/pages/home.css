@@ -20,6 +20,13 @@
         font-size: 4rem;
     }
 }
+@media (max-width: 518px) {
+    .bigbox {
+        margin-left: 2rem;
+        margin-right: 2rem;
+        height: 27rem   ;
+    }
+}
 .team{
     background-color: #A3D3FF
 }
