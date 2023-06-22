@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { AuthContext } from "../../shared/context/auth-context";
 import "../pages/home.css"
 import block from "../../images/Doc.png"
 const Main = () => {
+    const auth = React.useContext(AuthContext);
     return (
         <div className="bg-white main">
       <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
@@ -26,7 +27,7 @@ const Main = () => {
                 href="/auth"
                 className="rounded-md bg-rose-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-rose-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                CREATE ACCOUNT
+                {!auth.isLoggedIn?"CREATE ACCOUNT":"DASHBOARD"}
               </a>
               <a href="#" className="text-sm font-semibold leading-6 text-black">
                 Learn more <span aria-hidden="true">→</span>

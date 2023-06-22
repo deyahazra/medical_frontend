@@ -176,6 +176,7 @@ export default function SignInSide() {
                     onInput={inputHandler}
                 />}
               <Button
+                disabled={!formState.isValid} 
                 onClick={handleSubmit}
                 type="submit"
                 fullWidth
