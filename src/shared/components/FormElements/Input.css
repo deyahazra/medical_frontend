@@ -29,17 +29,17 @@
     outline: none;
     border-width: 1.5px;
     background: #ebebeb;
-    border-color: #510077;
+    border-color: #4082ec;
   }
   
   .form-control--invalid label,
   .form-control--invalid p {
-    color: red;
+    color: rgb(225, 78, 95);
     font-size: small;
   }
   
   .form-control--invalid input,
   .form-control--invalid textarea {
-    border-color: red;
+    border-color: rgb(225, 78, 95);
     background: #ffd1d1;
   }

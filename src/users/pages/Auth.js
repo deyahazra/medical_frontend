@@ -6,14 +6,16 @@ import { AuthContext } from "../../shared/context/auth-context";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import Input from '../../shared/components/FormElements/Input'
+import Modal from '../../shared/components/UIElements/Modal';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../shared/util/validators";
 import './Auth.css';
 
@@ -100,10 +102,17 @@ export default function SignInSide() {
                 console.log(err);
             }
         }
-    };
+    };  
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      {error && <Modal icon="error" title="Error" text={error} onClear={clearError} />}
+      {isLoading && 
+        <LoadingSpinner 
+          asOverlay 
+          text={isLoginMode?'Logging You In, please wait...':'Registering You, this may take a while...'} 
+        />}
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -176,11 +185,14 @@ export default function SignInSide() {
                     onInput={inputHandler}
                 />}
               <Button
-                disabled={!formState.isValid} 
+                className={isLoading?"button-hidden":""}
+                color="primary"
+                disabled={!formState.isValid || isLoading} 
                 onClick={handleSubmit}
                 type="submit"
                 fullWidth
                 variant="contained"
+                disableElevation
                 sx={{ mt: 3, mb: 2 }}
               >
                 {isLoginMode ? "LOGIN" : "SIGNUP"}

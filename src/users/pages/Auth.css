@@ -16,3 +16,7 @@
   font-size: 1rem;
   cursor: pointer;
 }
+
+.button-hidden {
+  display: none;
+}
