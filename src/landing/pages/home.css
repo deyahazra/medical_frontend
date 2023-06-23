@@ -2,14 +2,20 @@
     margin-bottom: 10px;
 }
 .boxing{
-    /* display: inline-block; */
     width: 80%;
     position: relative;
     left:8rem;
-    /* margin-left: 10px; */
     background-color: #A3D3FF;
     /* Picture/Big */
 }
+
+@media (max-width: 518px) {
+    .main-card{
+        border-radius: 1rem;
+        height: 21rem;
+    }
+}
+
 @media (max-width: 518px) {
     .remove {
         margin-top: 10px;
@@ -24,7 +30,7 @@
     .bigbox {
         margin-left: 2rem;
         margin-right: 2rem;
-        height: 27rem   ;
+        height: 28rem;
     }
 }
 .team{
