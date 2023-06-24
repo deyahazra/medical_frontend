@@ -21,6 +21,11 @@
     }
 }
 @media (max-width: 518px) {
+    .mobbutton {
+        font-size: 0.5rem;
+    }
+}
+@media (max-width: 518px) {
     .bigbox {
         margin-left: 2rem;
         margin-right: 2rem;

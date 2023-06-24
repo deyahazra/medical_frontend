@@ -87,7 +87,7 @@ const Home = () => {
             </div>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
+                <div className="space-y-2 py-6" onClick={() => setMobileMenuOpen(false)}>
                   {navigation.map((item) => (
                     <a
                       key={item.name}
