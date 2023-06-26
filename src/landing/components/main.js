@@ -30,7 +30,7 @@ const Main = () => {
               >
                 {!auth.isLoggedIn?"CREATE ACCOUNT":"DASHBOARD"}
               </button>
-              </Link> 
+              </Link>
               <a href="#" className="text-sm font-semibold leading-6 text-black">
                 Learn more <span aria-hidden="true">→</span>
               </a>
