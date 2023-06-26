@@ -52,6 +52,7 @@ export default function SignInSide() {
     const [formState, inputHandler] = useForm(initialFormState, false);
     const {isLoading, error, sendRequest, clearError} = useHttpClient();
 
+    
     const switchModeHandler = () => {
         setIsLoginMode(prevMode => !prevMode); // switch mode
         isLoginMode ? setInitialFormState(initialLoginState) : setInitialFormState(initialSignupState) // set initial form state
