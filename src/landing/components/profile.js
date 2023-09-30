@@ -1,4 +1,7 @@
+import { useEffect,useContext } from "react";
 import React,{useState} from "react";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import { AuthContext } from '../../shared/context/auth-context';
 import "./profile.css"
 const Profile = () => {
     const [image, setImage] = useState(null);
@@ -39,6 +42,32 @@ const Profile = () => {
           setImagePreview(reader.result);
         };
       };
+      const { isLoading, error, sendRequest, clearError } = useHttpClient();
+      const auth = useContext(AuthContext);
+        useEffect(() => {
+          // console.log("helo");
+            const fetchPlaces = async () => {
+              try {
+                const responseData = await sendRequest(
+                  'https://med-deatils-api.onrender.com/api/details/doctors/:did/profile',
+                  'GET',
+                  {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXNpZ25hdGlvbiI6ImRvY3RvciIsInVzZXJJZCI6IjY1MTg0YTM0YjgwY2FlNmM0NmY3YjViNCIsImVtYWlsIjoiZGV5YWhhenJhMjhAZ21haWwuY29tIiwiaWF0IjoxNjk2MDkwNjc3LCJleHAiOjE2OTY1MjI2Nzd9.MWl96SVczseg8NC_Mfki5KicLi9Pyd3EAQWHELOdaoc`,
+                  }
+                );
+                console.log(responseData);
+                console.log("helo");
+                // setSpecialty(responseData.user.specialty);
+                // setExperience(responseData.user.experience);
+                // setPhone(responseData.user.phone);
+                // setBio(responseData.user.bio);
+              } catch (err) {}
+            };
+            fetchPlaces();
+          }, [sendRequest]);
+      
+
 
     return (
     <div >

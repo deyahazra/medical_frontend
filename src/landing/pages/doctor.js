@@ -4,6 +4,7 @@ import PermanentDrawerLeft from "../components/sidebar";
 import "./doctor.css"
 import Profile from "../components/profile";
 import Patients from "../components/patients";
+import Dashboard from "../components/dashboard";
 
 const Doctors = () => {
     const [activeButton, setActiveButton] = React.useState('');
@@ -19,7 +20,7 @@ const Doctors = () => {
         <div className="content">
          {activeButton === '' ? <div><Profile/></div> : null}   
         {activeButton === 'Profile' ? <div><Profile/></div> : null}
-        {activeButton === 'Dashboard' ? <div>Dashboard</div> : null}
+        {activeButton === 'Dashboard' ? <div><Dashboard/></div> : null}
         {activeButton === 'Patients' ? <div><Patients/></div> : null}
         {activeButton === 'Appointments' ? <div>Appointments</div> : null}
         {activeButton === 'Magic AI' ? <div>Magic AI</div> : null}
