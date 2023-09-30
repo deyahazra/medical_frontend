@@ -8,6 +8,8 @@ import {
 
 import Home from './landing/pages/home';
 import Auth from './users/pages/Auth';
+import Doctors from './landing/pages/doctor';
+import PatientsProfile from './landing/pages/patients_profile';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/components/hooks/auth-hook';
 
@@ -19,7 +21,9 @@ function App() {
     routes = (
       <Switch>
         <Route path="/" exact> <Home /> </Route>
-        <Redirect to="/" />
+        <Route path="/patients_profile"> <PatientsProfile /> </Route>
+        <Route path="/doctors"> <Doctors /> </Route>
+        <Redirect to="/doctors" />
       </Switch>
     );
   } 

@@ -1,0 +1,51 @@
+.patientcard {
+    background: #e6f5f6;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .patientcard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  .patientcard .flex-auto {
+    min-width: 0;
+  }
+  
+  .patientcard .text-lg {
+    font-size: 1.25rem;
+  }
+  
+  .patientcard .text-sm {
+    font-size: 0.875rem;
+  }
+  
+  .patientcard button {
+    background-color: #3f51b5;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .patientcard button:hover {
+    background-color: #2c3e50;
+  }
+.pagi{
+  background-color: ivory;
+}
+.stats{
+  border-radius: 5rem;
+  border: 2px solid ;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease-in-out;
+}
+.stats:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
