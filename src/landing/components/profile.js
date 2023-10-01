@@ -47,16 +47,16 @@ const Profile = () => {
       };
       const handleSaveClick =async () => {
         try {
+          const formData = new FormData();
+          formData.append('imageBlob', '');
+          formData.append('specialization', specialty);
+          formData.append('experience', experience);
+          formData.append('phone', phone);
+          formData.append('bio', bio);
           await sendRequest(
             `https://med-deatils-api.onrender.com/api/details/doctors/${auth.userId}/profile`,
             'PATCH',
-            JSON.stringify({
-              specialization:specialty,
-              experience: experience,
-              phone: phone,
-              bio: bio,
-              profile_pic: imagePreview,
-            }),
+            
             {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${auth.token}`,
