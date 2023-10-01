@@ -5,6 +5,7 @@ import { AuthContext } from '../../shared/context/auth-context';
 import "./profile.css"
 const Profile = () => {
     const [image, setImage] = useState(null);
+    
     const [isEditing, setIsEditing] = useState(false);
     const [imagePreview, setImagePreview] = useState(
         'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
@@ -13,6 +14,8 @@ const Profile = () => {
     const [experience, setExperience] = useState('5 years');
     const [phone, setPhone] = useState('1234567890');
     const [bio, setBio] = useState('I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients.');
+    const [response, setResponse] = useState(null);
+    
     const handlePhoneChange = (event) => {
         setPhone(event.target.value);
         };
@@ -44,33 +47,34 @@ const Profile = () => {
       };
       const { isLoading, error, sendRequest, clearError } = useHttpClient();
       const auth = useContext(AuthContext);
-        useEffect(() => {
-          // console.log("helo");
-            const fetchPlaces = async () => {
-              try {
-                const responseData = await sendRequest(
-                  'https://med-deatils-api.onrender.com/api/details/doctors/:did/profile',
-                  'GET',
-                  {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXNpZ25hdGlvbiI6ImRvY3RvciIsInVzZXJJZCI6IjY1MTg0YTM0YjgwY2FlNmM0NmY3YjViNCIsImVtYWlsIjoiZGV5YWhhenJhMjhAZ21haWwuY29tIiwiaWF0IjoxNjk2MDkwNjc3LCJleHAiOjE2OTY1MjI2Nzd9.MWl96SVczseg8NC_Mfki5KicLi9Pyd3EAQWHELOdaoc`,
-                  }
-                );
-                console.log(responseData);
-                console.log("helo");
-                // setSpecialty(responseData.user.specialty);
-                // setExperience(responseData.user.experience);
-                // setPhone(responseData.user.phone);
-                // setBio(responseData.user.bio);
-              } catch (err) {}
-            };
-            fetchPlaces();
-          }, [sendRequest]);
+      useEffect(() => {
+          const fetchProfile = async () => {
+            try {
+              const responseData = await sendRequest(
+                `https://med-deatils-api.onrender.com/api/details/doctors/${auth.userId}/profile`,
+                'GET',
+                null,
+                {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${auth.token}`
+                }
+              );
+              console.log(responseData);
+            } 
+            catch (err) {
+              console.log(err);
+            }
+          };
+          fetchProfile();
+      }, [sendRequest]);
+
       
 
 
     return (
+
     <div >
+      {isLoading && <div>Loading...</div>}
       <div className="flex justify-center items-start overflow-hidden">
       <input
           type="file"
