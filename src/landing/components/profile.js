@@ -3,6 +3,7 @@ import React,{useState} from "react";
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { AuthContext } from '../../shared/context/auth-context';
 import "./profile.css"
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 const Profile = () => {
     const [image, setImage] = useState(null);
     
@@ -10,11 +11,11 @@ const Profile = () => {
     const [imagePreview, setImagePreview] = useState(
         'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
       );
-    const [specialty, setSpecialty] = useState('Cardiologist');
-    const [experience, setExperience] = useState('5 years');
-    const [phone, setPhone] = useState('1234567890');
+    const [specialty, setSpecialty] = useState('');
+    const [experience, setExperience] = useState('');
+    const [phone, setPhone] = useState('');
     const [bio, setBio] = useState('I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients.');
-    const [response, setResponse] = useState(null);
+    const [data,setData]=useState([]);
     
     const handlePhoneChange = (event) => {
         setPhone(event.target.value);
@@ -30,12 +31,11 @@ const Profile = () => {
         setIsEditing(true);
       };
     
-      const handleSaveClick = () => {
-        setIsEditing(false);
-      };
-    
       const handleSpecialtyChange = (event) => {
-        setSpecialty(event.target.value);
+        setData((prevData) => ({
+          ...prevData,
+          specialization: event.target.value,
+        }));
       };
       const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -44,6 +44,28 @@ const Profile = () => {
         reader.onloadend = () => {
           setImagePreview(reader.result);
         };
+      };
+      const handleSaveClick =async () => {
+        try {
+          await sendRequest(
+            `https://med-deatils-api.onrender.com/api/details/doctors/${auth.userId}/profile`,
+            'PATCH',
+            JSON.stringify({
+              specialization:specialty,
+              experience: experience,
+              phone: phone,
+              bio: bio,
+              profile_pic: imagePreview,
+            }),
+            {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${auth.token}`,
+            }
+          );
+          setIsEditing(false);
+        } catch (err) {
+          console.log(err);
+        }
       };
       const { isLoading, error, sendRequest, clearError } = useHttpClient();
       const auth = useContext(AuthContext);
@@ -59,14 +81,15 @@ const Profile = () => {
                   Authorization: `Bearer ${auth.token}`
                 }
               );
-              console.log(responseData);
+              setData(responseData.doctor);
+              console.log(responseData.doctor);
             } 
             catch (err) {
               console.log(err);
             }
           };
           fetchProfile();
-      }, [sendRequest]);
+      }, []);
 
       
 
@@ -74,7 +97,7 @@ const Profile = () => {
     return (
 
     <div >
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <LoadingSpinner asOverlay text="Fetching Your Profile..."/>}
       <div className="flex justify-center items-start overflow-hidden">
       <input
           type="file"
@@ -86,8 +109,8 @@ const Profile = () => {
         <div>
         <img
           className="h-40 w-40 rounded-full ring-2 ring-white mt-20"
-          src={imagePreview}
-          alt=""
+          src={`data:image/png;base64,${data.profile_pic}`}
+          alt="No pic "
         />
         <label
           htmlFor="fileInput"
@@ -106,15 +129,15 @@ const Profile = () => {
         <dl className="divide-y divide-gray-100">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Full name</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Margot Foster</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.name}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Registration Number</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">000000</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.regd_no}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Email address</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.email}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Specialization</dt>
@@ -125,10 +148,11 @@ const Profile = () => {
                       onChange={handleSpecialtyChange}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50"
                       disabled={isEditing ? false : true}
+                      readOnly={false}
                     />
                   ) : (
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {specialty}
+                      {data.specialization}
                     </dd>
                   )}
           </div>
@@ -144,7 +168,7 @@ const Profile = () => {
                     />
                   ) : (
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {experience}
+                      {data.experience}
                     </dd>
                   )}
           </div>
@@ -160,7 +184,7 @@ const Profile = () => {
                     />
                   ) : (
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {phone}
+                      {data.phone}
                     </dd>
                   )}
           </div>
@@ -176,7 +200,7 @@ const Profile = () => {
                     />
                   ) : (
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {bio}
+                      {data.bio}
                     </dd>
                   )}
           </div>
