@@ -1,101 +1,89 @@
-import React,{useState} from "react";
+import React,{useState,useContext,useRef, useEffect} from "react";
 import { Container, TextField } from "@mui/material";
 import "./patients.css"
 import { Link } from "react-router-dom";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import Modal_Add from "./modal_add";
+import { AuthContext } from '../../shared/context/auth-context';
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
-const stats = [
-  { id: 1, name: 'No of patients this week', value: '44' },
-  { id: 2, name: 'No of new Patients', value: '20' },
-  { id: 3, name: 'Busiest day', value: 'Wednesday' },
-]  
 const Patients = () => {
-    const [people, setPeople] = useState ([
-        {
-          id:1,
-          name: 'Leslie Alexander',
-          Age: '25',
-          Gender:'F',
-          Date: '2023-01-23',
-          note: '',
-          expanded: false,
-        },
-        {
-            id:2,
-            name: 'Leslie Alexander',
-            Age: '25',
-            Gender:'F',
-            Date: '2023-01-23',
-            note: '',
-            expanded: false,
-          },
+  const auth = useContext(AuthContext);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [expanded, setExpanded] = useState([]);
+  const [save,setSave]=useState(0);
+  const [data,setData]=useState([]);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const responseData = await sendRequest(
+          `https://med-deatils-api.onrender.com/api/details/doctors/${auth.userId}/patients`,
+          'GET',
+          null,
           {
-            id:3,
-            name: 'Leslie Alexander',
-            Age: '25',
-            Gender:'F',
-            Date: '2023-01-23',
-            note: '',
-            expanded: false,
-          },
-          {
-            id:4,
-            name: 'Leslie Alexander',
-            Age: '25',
-            Gender:'F',
-            Date: '2023-01-23',
-            note: '',
-            expanded: false,
-          },
-          {
-            id:5,
-            name: 'Leslie Alexander',
-            Age: '25',
-            Gender:'F',
-            Date: '2023-01-23',
-            note: '',
-            expanded: false,
-          },
-        
-      ]);
-    const handleViewMoreClick = (index) => {
-        setPeople((prevPeople) =>
-          prevPeople.map((person, i) =>
-            i === index ? { ...person, expanded: !person.expanded } : person
-          )
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`
+          }
         );
+        setData(responseData.patients);
+        console.log(responseData.patients);
+      } 
+      catch (err) {
+        console.log(err);
+      }
+    };
+    fetchProfile();
+}, [save]);
+    const [open, setOpen] = useState(false)
+    const cancelButtonRef = useRef(null)
+    const handleAdd = () => {
+        setOpen(true)
+        setSave(save+1);
+        console.log("Add patient");
+      };
+    const handleViewMoreClick = (index) => {
+      setExpanded((prevExpanded) => {
+        const newExpanded = [...prevExpanded];
+        newExpanded[index] = !newExpanded[index];
+        return newExpanded;
+      }); 
+        
       };
       const handleNoteChange = (event, index) => {
-        setPeople((prevPeople) =>
-          prevPeople.map((person, i) =>
-            i === index ? { ...person, note: event.target.value } : person
-          )
-        );
+        const newExpanded = [...expanded];
+        newExpanded[index] = event.target.value;
+        setExpanded(newExpanded);
       };
     return (
+      <div>
+        {isLoading && <LoadingSpinner asOverlay text="Fetching Your Patients..."/>}
         <div>
+        <Modal_Add open={open} setOpen={setOpen} cancelButtonRef={cancelButtonRef} />
         <Container maxWidth="md" sx={{ mt: 5 }}>
           <TextField type="search" id="search" label="Search" sx={{ width: 800 }} />
         </Container>
-        
+        <button  onClick={handleAdd} className="mt-5 ml-5 mr-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
+          Add Patients
+        </button>
         <div>
           <ul role="list" className="divide-y divide-gray-100 mt-20 ml-20 mr-20">
-            {people.map((person, index) => (
+            {data.map((person, index) => (
               <li key={person.email} className="patientcard flex justify-between gap-x-6 py-5">
                 <div className="flex min-w-0 gap-x-4">
                   <div className="min-w-0 flex-auto">
                     <p className="text-lg font-semibold leading-6 text-gray-900">{person.name}</p>
-                    <p className="mt-10 text-lg leading-5 text-gray-500">{person.Gender}</p>
+                    <p className="mt-10 text-lg leading-5 text-gray-500">{person.sex}</p>
                   </div>
                 </div>
                 <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                  <p className="text-lg leading-6 text-gray-900">Age: {person.Age}</p>
-                  <div className="mt-1 text-sm leading-5 text-gray-500">Last Date: {person.Date}</div>
+                  <p className="text-lg leading-6 text-gray-900">Age: {person.age}</p>
+                  <div className="mt-1 text-sm leading-5 text-gray-500">Last Date: 12-5-23</div>
                   <button className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleViewMoreClick(index)}>
-                    {person.expanded ? 'View Less' : 'View More'}
+                    {expanded[index] ? 'View Less' : 'View More'}
                   </button>
                   
-                  {person.expanded && (
+                  {expanded[index] && (
                     <li style={{ height: 'auto' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <p className="mt-2 text-sm leading-5 text-gray-500">Notes:</p>
@@ -105,7 +93,7 @@ const Patients = () => {
                         </div>
                         <div className="ml-20 mt-3 bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         <Link to={`/patients_profile/${person.id}`}>Open Profile</Link>
-                        </div>
+                        </div> 
                     </div>
                     </li>
                   )}
@@ -197,6 +185,7 @@ const Patients = () => {
         </div>
       </div>
     </div>
+      </div>
       </div>
     )
 }

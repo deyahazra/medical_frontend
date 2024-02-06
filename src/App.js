@@ -21,7 +21,7 @@ function App() {
     routes = (
       <Switch>
         <Route path="/" exact> <Home /> </Route>
-        <Route path="/patients_profile"> <PatientsProfile /> </Route>
+        <Route path="/patients_profile/:patient_id"> <PatientsProfile /> </Route>
         <Route path="/doctors"> <Doctors /> </Route>
         <Redirect to="/doctors" />
       </Switch>

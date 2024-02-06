@@ -5,16 +5,16 @@ import { AuthContext } from '../../shared/context/auth-context';
 import "./profile.css"
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 const Profile = () => {
-    const [image, setImage] = useState(null);
-    
+  const auth = useContext(AuthContext);
     const [isEditing, setIsEditing] = useState(false);
+    const [save,setSave]=useState(0);
     const [imagePreview, setImagePreview] = useState(
         'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
       );
     const [specialty, setSpecialty] = useState('');
     const [experience, setExperience] = useState('');
     const [phone, setPhone] = useState('');
-    const [bio, setBio] = useState('I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients. I am a cardiologist with 5 years of experience in the field. I have worked in various hospitals and have treated many patients.');
+    const [bio, setBio] = useState('');
     const [data,setData]=useState([]);
     
     const handlePhoneChange = (event) => {
@@ -32,43 +32,35 @@ const Profile = () => {
       };
     
       const handleSpecialtyChange = (event) => {
-        setData((prevData) => ({
-          ...prevData,
-          specialization: event.target.value,
-        }));
+        setSpecialty(event.target.value);
       };
       const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          setImagePreview(reader.result);
-        };
+        setImagePreview(event.target.files[0]);
       };
-      const handleSaveClick =async () => {
+      const handleSaveClick = async () => {
         try {
           const formData = new FormData();
-          formData.append('imageBlob', '');
+          formData.append('imageBlob', imagePreview);
           formData.append('specialization', specialty);
           formData.append('experience', experience);
           formData.append('phone', phone);
           formData.append('bio', bio);
           await sendRequest(
-            `https://med-deatils-api.onrender.com/api/details/doctors/${auth.userId}/profile`,
+            `https://med-deatils-api.onrender.com/api/details/doctors/${auth.userId}/update_profile`,
             'PATCH',
-            
+            formData,
             {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${auth.token}`,
+              Authorization: `Bearer ${auth.token}`
             }
           );
           setIsEditing(false);
+          setSave(save+1);
         } catch (err) {
           console.log(err);
         }
       };
       const { isLoading, error, sendRequest, clearError } = useHttpClient();
-      const auth = useContext(AuthContext);
+      
       useEffect(() => {
           const fetchProfile = async () => {
             try {
@@ -89,7 +81,7 @@ const Profile = () => {
             }
           };
           fetchProfile();
-      }, []);
+      }, [save]);
 
       
 
@@ -165,6 +157,7 @@ const Profile = () => {
                       onChange={handleExpChange}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50"
                       disabled={isEditing ? false : true}
+                      readOnly={false}
                     />
                   ) : (
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
@@ -181,6 +174,7 @@ const Profile = () => {
                       onChange={handlePhoneChange}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50"
                       disabled={isEditing ? false : true}
+                      readOnly={false}
                     />
                   ) : (
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
@@ -197,6 +191,7 @@ const Profile = () => {
                       onChange={handleBioChange}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50"
                       disabled={isEditing ? false : true}
+                      readOnly={false}
                     />
                   ) : (
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">

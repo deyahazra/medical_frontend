@@ -1,23 +1,77 @@
-import React,{useState} from "react";
+import React,{useState,useEffect,useContext} from "react";
 import 'react-awesome-slider/dist/styles.css';
 import "./patients_profile.css"
 import 'react-awesome-slider/dist/styles.css';
 import 'react-awesome-slider/dist/custom-animations/scale-out-animation.css';
 import { Fragment, useRef} from 'react'
 import Modal_patients from "../components/Modal_Patients";
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import { AuthContext } from '../../shared/context/auth-context';
+import { useParams } from "react-router-dom";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 const PatientsProfile = () => {
+    const auth = useContext(AuthContext);
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const params = useParams();
+    const userId = params.patient_id;
     const [openModal, setOpenModal] = useState(false)
     const cancelButtonRef = useRef(null)
     const [data, setData] = useState("")
-    const Presp = () => {
+    const [images, setImages] = useState([])
+    const Presp = async () => {
         setOpenModal(true)
         setData("Previous prescription")
-    }
+        try {
+          const formData = new FormData();
+          formData.append('patientId', userId);
+          formData.append('doctorId', `${auth.userId}`);
+          const Response= await sendRequest(
+            `https://med-deatils-api.onrender.com/api/details/doctors/get_prescriptions`,
+            'POST',
+            formData,
+            {
+              Authorization: `Bearer ${auth.token}`,
+            }
+          );
+          setImages(Response);
+          console.log(Response);
+          console.log("Success");
+        } catch (err) {
+          console.log(err);
+        }
+  }
     const Report = () => {
       setOpenModal(true)
       setData("Previous Report")
   }
+  useEffect(() => {
+    const addPatient = async () => {
+      try {
+        const formData = new FormData();
+        formData.append('patientId', userId);
+        formData.append('doctorId', `${auth.userId}`);
+        const Response=await sendRequest(
+          `https://med-deatils-api.onrender.com/api/details/doctors/getPatient`,
+          'POST',
+          formData,
+          {
+            Authorization: `Bearer ${auth.token}`,
+          }
+        );
+        setData(Response.patient);
+        console.log(Response.patient);
+        console.log("Success");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    addPatient();
+  }, []);
+
     return (
+        <div>
+          {isLoading && <LoadingSpinner asOverlay text="Fetching Your Patients..."/>}
     <div className="pg"style={{ borderRadius: '16px' }}>
         <div className="flex justify-center items-start overflow-hidden">
         <img
@@ -31,11 +85,11 @@ const PatientsProfile = () => {
         <dl className="divide-y divide-gray-100">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Full name</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Margot Foster</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.name}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Sex</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Female</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.sex}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Age</dt>
@@ -43,11 +97,11 @@ const PatientsProfile = () => {
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Height</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">5.5 feet</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.height} cm</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Weight</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">56 kg</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.weight} kg</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Last Appointments</dt>
@@ -61,7 +115,7 @@ const PatientsProfile = () => {
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Email address</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.email}</dd>
           </div>
           </dl>
         </div>
@@ -74,6 +128,7 @@ const PatientsProfile = () => {
         </button>
       </div>
       <Modal_patients openModal={openModal} setOpenModal={setOpenModal} cancelButtonRef={cancelButtonRef} data={data}/>
+    </div>
     </div>
     )
 }

@@ -2,17 +2,21 @@ import React,{useState} from "react";
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 import "../pages/patients_profile.css"
+import Webcam from 'react-webcam';
 import 'react-awesome-slider/dist/styles.css';
 import 'react-awesome-slider/dist/custom-animations/scale-out-animation.css';
 import { Fragment, useRef} from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilePrescription } from '@fortawesome/free-solid-svg-icons'
+import { useHttpClient } from "../../shared/components/hooks/http-hook";
+import { AuthContext } from '../../shared/context/auth-context';
 const Modal_patients = (props) => {
+  const webcamRef = useRef(null)
     return (
         <div>
         <Transition.Root show={props.openModal} as={Fragment}>
-        <Dialog as="div" className="relative z-10" initialFocus={props.cancelButtonRef} onClose={props.setOpenModal}>
+        <Dialog as="div" className=" relative z-10" initialFocus={props.cancelButtonRef} onClose={props.setOpenModal}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -36,8 +40,9 @@ const Modal_patients = (props) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full max-w-3xl">
-                <div className="flex min-h-screen items-end justify-center p-4 text-center sm:items-center sm:p-0">
+<Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all  w-full h-full">
+  
+                <div className=" flex min-h-screen items-end justify-center p-4 text-center sm:items-center sm:p-0">
                   <div className="sm:flex sm:items-start">
                     <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                     <FontAwesomeIcon icon={faFilePrescription} />
@@ -47,14 +52,19 @@ const Modal_patients = (props) => {
                         {props.data}
                       </Dialog.Title>
                       <div className="mt-2" style={{ height: '100%' }}>
-                        {/* corousel */}
-                        <div className="slid" style={{ width: '40rem', height: '40rem' }}>
-                            <AwesomeSlider className="slider" animation=" scale-out-animation">
-                            <div data-src="/path/to/image-0.png" />
-                            <div data-src="/path/to/image-1.png" />
-                            <div data-src="/path/to/image-2.jpg" />
-                            </AwesomeSlider>
-                        </div>
+                       
+                      <Webcam 
+                          width='640px'
+                          height='480px'
+                          id="webcam"
+                          ref={webcamRef}
+                          style={{
+                            position: 'absolute',
+                            left: 120,
+                            top: 100,
+                            padding: '0px',
+                          }}
+                        />
                       </div>
                     </div>
                   </div>

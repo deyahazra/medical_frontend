@@ -22,7 +22,8 @@ export default function PermanentDrawerLeft(props) {
           color: "red",
           borderTopRightRadius: 30,
           borderBottomRightRadius: 30,
-          overflow: 'hidden'
+          overflow: 'hidden',
+          
         }
       }}
         sx={{
@@ -52,13 +53,13 @@ export default function PermanentDrawerLeft(props) {
         <FontAwesomeIcon icon={faHospitalUser} style={{ marginRight: '1.7rem' ,color: "#27ae60"}}/>
           <span>Patients</span>
         </button>
-        <button className={`sidebuttons ${activeButton === 'Appointments' ? 'active' : ''}`} onClick={() => handleButtonClick('Appointments')}>
+        <button className={`sidebuttons ${activeButton === 'Yoga' ? 'active' : ''}`} onClick={() => handleButtonClick('Yoga')}>
         <FontAwesomeIcon icon={faCalendarCheck} style={{ marginRight: '2rem' ,color: "#27ae60"}} />
-          <span>Appointments</span>
+          <span>Yoga</span>
         </button>
-        <button className={`sidebuttons ${activeButton === 'Magic AI' ? 'active' : ''}`} onClick={() => handleButtonClick('Magic AI')}>
+        <button className={`sidebuttons ${activeButton === 'Mental Health' ? 'active' : ''}`} onClick={() => handleButtonClick('Mental Health')}>
         <FontAwesomeIcon icon={faWandMagicSparkles} style={{ marginRight: '1.6rem' ,color: "#27ae60"}}/>
-          <span>Magic AI</span>
+          <span>Mental Health</span>
           </button>
         <button className='sidebuttons'style={{ position: 'absolute', bottom: '0', left: '0', right: '0' ,marginBottom:'1rem' }}>
         <FontAwesomeIcon icon={faRightFromBracket} style={{ marginRight: '1.6rem' ,color: "#27ae60"}}/>
