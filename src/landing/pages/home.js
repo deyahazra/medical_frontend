@@ -16,7 +16,6 @@ const navigation = [
     {key:2, name: 'About us', href: '#about_us' },
     {key:3, name: 'Services', href: '#services' },
     {key:4, name: 'Team', href: '#team' },
-    {key:5, name: 'Doctors', href: '#things' },
     {key:6, name: 'Contact us', href: '#contact' },
   ]
 const Home = () => {

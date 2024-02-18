@@ -11,8 +11,6 @@ const Profile = () => {
     const [imagePreview, setImagePreview] = useState(
         'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
       );
-    const [specialty, setSpecialty] = useState('');
-    const [experience, setExperience] = useState('');
     const [phone, setPhone] = useState('');
     const [bio, setBio] = useState('');
     const [data,setData]=useState([]);
@@ -20,33 +18,21 @@ const Profile = () => {
     const handlePhoneChange = (event) => {
         setPhone(event.target.value);
         };
-    const handleExpChange = (event) => {
-        setExperience(event.target.value);
-        };
-    const handleBioChange = (event) => {
-        setBio(event.target.value);
-        };
-
     const handleEditClick = () => {
         setIsEditing(true);
-      };
-    
-      const handleSpecialtyChange = (event) => {
-        setSpecialty(event.target.value);
       };
       const handleImageChange = (event) => {
         setImagePreview(event.target.files[0]);
       };
       const handleSaveClick = async () => {
+        
         try {
+          console.log(phone);
           const formData = new FormData();
-          formData.append('imageBlob', imagePreview);
-          formData.append('specialization', specialty);
-          formData.append('experience', experience);
+          formData.append('profile_pic', imagePreview);
           formData.append('phone', phone);
-          formData.append('bio', bio);
           await sendRequest(
-            `https://med-deatils-api.onrender.com/api/details/doctors/${auth.userId}/update_profile`,
+            `https://medvita-auth-api.onrender.com/api/auth/update_user/${auth.userId}`,
             'PATCH',
             formData,
             {
@@ -65,7 +51,7 @@ const Profile = () => {
           const fetchProfile = async () => {
             try {
               const responseData = await sendRequest(
-                `https://med-deatils-api.onrender.com/api/details/doctors/${auth.userId}/profile`,
+                `https://medvita-auth-api.onrender.com/api/auth/get_user/${auth.userId}`,
                 'GET',
                 null,
                 {
@@ -73,8 +59,8 @@ const Profile = () => {
                   Authorization: `Bearer ${auth.token}`
                 }
               );
-              setData(responseData.doctor);
-              console.log(responseData.doctor);
+              setData(responseData.user);
+              console.log(responseData.user);
             } 
             catch (err) {
               console.log(err);
@@ -82,9 +68,6 @@ const Profile = () => {
           };
           fetchProfile();
       }, [save]);
-
-      
-
 
     return (
 
@@ -124,46 +107,8 @@ const Profile = () => {
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.name}</dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 headtext">Registration Number</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.regd_no}</dd>
-          </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Email address</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{data.email}</dd>
-          </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 headtext">Specialization</dt>
-            {isEditing ? (
-                    <input
-                      type="text"
-                      value={specialty}
-                      onChange={handleSpecialtyChange}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50"
-                      disabled={isEditing ? false : true}
-                      readOnly={false}
-                    />
-                  ) : (
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {data.specialization}
-                    </dd>
-                  )}
-          </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 headtext">Experience</dt>
-            {isEditing ? (
-                    <input
-                      type="text"
-                      value={experience}
-                      onChange={handleExpChange}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50"
-                      disabled={isEditing ? false : true}
-                      readOnly={false}
-                    />
-                  ) : (
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {data.experience}
-                    </dd>
-                  )}
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 headtext">Phone Number</dt>
@@ -179,23 +124,6 @@ const Profile = () => {
                   ) : (
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                       {data.phone}
-                    </dd>
-                  )}
-          </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 headtext">Bio</dt>
-            {isEditing ? (
-                    <input
-                      type="text"
-                      value={bio}
-                      onChange={handleBioChange}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50"
-                      disabled={isEditing ? false : true}
-                      readOnly={false}
-                    />
-                  ) : (
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {data.bio}
                     </dd>
                   )}
           </div>

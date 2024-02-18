@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import { Link } from "react-router-dom";
 import "./Mental.css"
 import mental from "../../images/mental.svg"
 import chat from "../../images/chat.png"
@@ -15,12 +16,12 @@ const Mental = () => {
     <div className="text-center ltr:sm:text-left rtl:sm:text-right">
       
     <div className="absolute bottom-56 right-44 mb-4 mr-4">
-    <a
+    <div
         href="#"
         className="but inline-block rounded-full  px-12 py-3 text-sm font-medium text-white transition  focus:outline-none focus:ring focus:ring-yellow-400"
     >
         Get Yours Today
-    </a>
+    </div>
 </div>
     </div>
   </div>
@@ -54,18 +55,21 @@ const Mental = () => {
           </li>
 
           <li>
-    <a href="#" className="group block">
+          <div className="group block">
+    <Link to="/voice_mental">
         <img
             src={voice}
             alt=""
             className="aspect-square w-full rounded object-cover transform transition duration-500 ease-in-out hover:scale-105"
         />
-    </a>
+    </Link>
+</div>
 </li>
         </ul>
       </div>
     </div>
   </div>
+  
 </section>
 
 </>

@@ -5,6 +5,7 @@ import yogaimg from "../../images/yoga.gif"
 import catpose from "../../images/catyoga.jpg"
 import Modal_patients from "./Modal_Patients.js";
 import heading from "../../images/heading.png"
+import { useNavigate } from 'react-router-dom';
 const yoga = [
     {
       id: 1,
@@ -44,10 +45,12 @@ const yoga = [
       },
 ]
 const Yoga = () => {
-  const [openModal, setOpenModal] = useState(false)
-    const cancelButtonRef = useRef(null)
+  const navigate = useNavigate();
+  // const [openModal, setOpenModal] = useState(false)
+    // const cancelButtonRef = useRef(null)
     const handleyoga = () => {
-      setOpenModal(true)
+      navigate('/yoga_cam');
+      
     }
     return (
         <>
@@ -81,9 +84,9 @@ const Yoga = () => {
     className="h-[200%] w-[200%] object-cover sm:h-[calc(100%_-_2rem)] sm:self-end sm:rounded-ss-[30px] md:h-[calc(100%_-_4rem)] md:rounded-ss-[60px]"
   />
 </section>
-<section className='sec2' id="list">
+<section className='sect2' id="list">
 <img src={heading} className="heading mx-auto w-90 h-40"/>
-    <Modal_patients openModal={openModal} setOpenModal={setOpenModal} cancelButtonRef={cancelButtonRef}/>
+    {/* <Modal_patients openModal={openModal} setOpenModal={setOpenModal} cancelButtonRef={cancelButtonRef}/> */}
 <div className="card list mx-auto mt-10 grid max-w-lg grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3"
 >
 {yoga.map((yoga) => (

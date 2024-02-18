@@ -18,10 +18,10 @@ const Main = () => {
           </svg>
           <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left bigbox">
             <h1 className="text-3xl font-bold tracking-tight text-black sm:text-4xl mobfont">
-              MEDVITA
+              MedVita
             </h1>
             <p className="mt-6 text-lg leading-8 text-black">
-              We care for your health. We are here to help you.
+            Empowering you to manage your health
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start clean">
               <Link to="/auth">

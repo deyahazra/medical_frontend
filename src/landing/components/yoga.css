@@ -19,6 +19,13 @@
     font-family: 'Lemon', sans-serif;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
   }
-.sec2{
-    background-color: rgba(193, 193, 155, 0.474);
+.sect2{
+    background-color: rgba(220, 220, 153, 0.364);
 }
+.font{
+    font-family: 'Lemon', sans-serif;
+}
+.fontStyle {
+    font-family: 'Verdana', Geneva, sans-serif;
+    color: rgba(19, 69, 28, 0.585);
+  }

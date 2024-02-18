@@ -41,10 +41,6 @@ export default function SignInSide() {
             isValid: false
         },
         ...initialLoginState,
-        regd_no: {
-            value: "",
-            isValid: false
-        },
     };
 
     const [isLoginMode, setIsLoginMode] = useState(true);
@@ -64,7 +60,7 @@ export default function SignInSide() {
         if(isLoginMode) {
             try {
                 const responseData = await sendRequest(
-                    "https://med-auth-api.onrender.com" + "/api/doctors/auth/login",
+                    "https://medvita-auth-api.onrender.com/api/auth/login",
                     "POST",
                     JSON.stringify({
                         email: formState.inputs.email.value,
@@ -76,7 +72,7 @@ export default function SignInSide() {
                 )
                 console.log(responseData);
 
-                auth.login(responseData.doctorId, responseData.token);
+                auth.login(responseData.userId, responseData.token);
             }
             catch(err) {
                 console.log(err);
@@ -85,19 +81,18 @@ export default function SignInSide() {
         else {
             try {
                 const responseData = await sendRequest(
-                    "https://med-auth-api.onrender.com" + "/api/doctors/auth/signup",
+                    "https://medvita-auth-api.onrender.com/api/auth/signup",
                     "POST",
                     JSON.stringify({
                         name: formState.inputs.name.value,
                         email: formState.inputs.email.value,
                         password: formState.inputs.password.value,
-                        regd_no: formState.inputs.regd_no.value
                     }),
                     {
                         "Content-Type": "application/json"
                     }
                 )
-                auth.login(responseData.doctorId, responseData.token);
+                auth.login(responseData.userId, responseData.token);
             }
             catch(err) {
                 console.log(err);
@@ -175,16 +170,6 @@ export default function SignInSide() {
                     errorText="Please enter a valid password, at least 6 characters."
                     onInput={inputHandler}
                 />
-                { !isLoginMode &&
-                    <Input
-                    element="input"
-                    id="regd_no"
-                    type="name"
-                    label="Registration Number"
-                    validators={[VALIDATOR_MINLENGTH(6)]}
-                    errorText="Please enter a valid registration number, at least 6 characters."
-                    onInput={inputHandler}
-                />}
               <Button
                 className={isLoading?"button-hidden":""}
                 color="primary"

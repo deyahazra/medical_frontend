@@ -23,9 +23,6 @@ const Doctors = () => {
          {activeButton === '' ? <div><Dashboard/></div> : null}   
         {activeButton === 'Profile' ? <div><Profile/></div> : null}
         {activeButton === 'Dashboard' ? <div><Dashboard/></div> : null}
-        {activeButton === 'Patients' ? <div><Patients/></div> : null}
-        {activeButton === 'Yoga' ? <div><Yoga/></div> : null}
-        {activeButton === 'Mental Health' ? <div><Mental/></div> : null}
         </div>
         </div>
     )

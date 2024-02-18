@@ -12,7 +12,6 @@ import { faFilePrescription } from '@fortawesome/free-solid-svg-icons'
 import { useHttpClient } from "../../shared/components/hooks/http-hook";
 import { AuthContext } from '../../shared/context/auth-context';
 const Modal_patients = (props) => {
-  const webcamRef = useRef(null)
     return (
         <div>
         <Transition.Root show={props.openModal} as={Fragment}>
@@ -52,19 +51,6 @@ const Modal_patients = (props) => {
                         {props.data}
                       </Dialog.Title>
                       <div className="mt-2" style={{ height: '100%' }}>
-                       
-                      <Webcam 
-                          width='640px'
-                          height='480px'
-                          id="webcam"
-                          ref={webcamRef}
-                          style={{
-                            position: 'absolute',
-                            left: 120,
-                            top: 100,
-                            padding: '0px',
-                          }}
-                        />
                       </div>
                     </div>
                   </div>

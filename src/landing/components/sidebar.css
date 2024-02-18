@@ -4,7 +4,7 @@
     margin: 0 auto;
 }
 .drawer{
-    background-color: #e5ebeb
+    background-color: #b7e4e771
 }
 .maindiv{
     background-color: #A3D3FF
@@ -28,8 +28,8 @@
 }
 
 .sidebuttons:hover {
-    background-color: #f2f5f6;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    background-color: rgba(15, 76, 96, 0.819)71;
+    box-shadow: 2px 2px 10px rgba(12, 96, 157, 0.3);
     animation:  pulse 0.5s ease-in-out;
   }
   @keyframes pulse {

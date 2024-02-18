@@ -38,7 +38,7 @@ const people = [
       },
       {
         id: 4,
-        name: 'Sagnik Singha',
+        name: 'Atrij Paul',
         role: 'Co-Founder / CEO',
         hrefG: 'https://github.com/deyahazra',
         hrefL: 'https://www.linkedin.com/in/deya-hazra-51a23222a/',

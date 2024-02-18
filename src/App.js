@@ -1,39 +1,67 @@
-import './App.css';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from 'react-router-dom';
-
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Home from './landing/pages/home';
+import './App.css';
 import Auth from './users/pages/Auth';
 import Doctors from './landing/pages/doctor';
 import PatientsProfile from './landing/pages/patients_profile';
+import Voice_Mental from './landing/components/voice_Mental';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/components/hooks/auth-hook';
+import { AnimatePresence, motion } from 'framer-motion';
+import Yoga_Cam from './landing/components/yog_cam';
+import Yoga from './landing/components/yoga';
+import Pregency from './landing/components/Pregnancy';
+import Mental from './landing/components/Mental';
+import CommunityGeneral from './landing/components/communityGen';
+import CommunityEpidemic from './landing/components/communityEpi';
+import CommunityPandemic from './landing/components/communityPan';
+import CommunityPregnency from './landing/components/communityPreg';
+
+const RouteTransition = ({ children }) => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence >
+      <motion.div key={location.pathname}>
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
 function App() {
   const { token, login, logout, userId } = useAuth();
   let routes;
-
+  
   if (token) {
     routes = (
-      <Switch>
-        <Route path="/" exact> <Home /> </Route>
-        <Route path="/patients_profile/:patient_id"> <PatientsProfile /> </Route>
-        <Route path="/doctors"> <Doctors /> </Route>
-        <Redirect to="/doctors" />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/voice_mental" element={<Voice_Mental />} />
+        <Route path="/yoga" element={<Yoga/>}/>
+        <Route path="/pregnency" element={<Pregency/>}/>
+        <Route path="/community/general" element={<CommunityGeneral/>}/>
+        <Route path="/community/epidemic" element={<CommunityEpidemic/>}/>
+        <Route path="/community/pandemic" element={<CommunityPandemic/>}/>
+        <Route path="/community/pregnency" element={<CommunityPregnency/>}/>
+        <Route path="/mental" element={<Mental />} />
+        <Route path="/patients_profile/:patient_id" element={
+          <RouteTransition>
+            <PatientsProfile />
+          </RouteTransition>
+        } />
+        <Route path="/doctors" element={<Doctors />} />
+        <Route path="/yoga_cam" element={<Yoga_Cam />} />
+        <Route path="*" element={<Navigate to="/doctors" />} />
+      </Routes>
     );
-  } 
-  else {
+  } else {
     routes = (
-      <Switch>
-        <Route path="/" exact> <Home /> </Route>
-        <Route path="/auth"> <Auth /> </Route>
-        <Redirect to="/" />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     );
   }
 
@@ -44,12 +72,10 @@ function App() {
         token: token,
         userId: userId,
         login: login,
-        logout: logout
+        logout: logout,
       }}
     >
-      <Router>
-          <main>{routes}</main>
-      </Router>
+      {routes}
     </AuthContext.Provider>
   );
 }
