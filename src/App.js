@@ -3,19 +3,18 @@ import Home from './landing/pages/home';
 import './App.css';
 import Auth from './users/pages/Auth';
 import Doctors from './landing/pages/doctor';
-import PatientsProfile from './landing/pages/patients_profile';
-import Voice_Mental from './landing/components/voice_Mental';
+import Voice_Mental from './landing/components/Mental/voice_Mental';
 import { AuthContext } from './shared/context/auth-context';
 import { useAuth } from './shared/components/hooks/auth-hook';
 import { AnimatePresence, motion } from 'framer-motion';
-import Yoga_Cam from './landing/components/yog_cam';
-import Yoga from './landing/components/yoga';
-import Pregency from './landing/components/Pregnancy';
-import Mental from './landing/components/Mental';
-import CommunityGeneral from './landing/components/communityGen';
-import CommunityEpidemic from './landing/components/communityEpi';
-import CommunityPandemic from './landing/components/communityPan';
-import CommunityPregnency from './landing/components/communityPreg';
+import Yoga_Cam from './landing/components/Yoga/yog_cam';
+import Yoga from './landing/components/Yoga/yoga';
+import Pregency from './landing/components/Pregnancy/Pregnancy';
+import Mental from './landing/components/Mental/Mental';
+import CommunityGeneral from './landing/components/Community/communityGen';
+import CommunityEpidemic from './landing/components/Community/communityEpi';
+import CommunityPandemic from './landing/components/Community/communityPan';
+import CommunityPregnency from './landing/components/Community/communityPreg';
 
 const RouteTransition = ({ children }) => {
   const location = useLocation();
@@ -47,7 +46,6 @@ function App() {
         <Route path="/mental" element={<Mental />} />
         <Route path="/patients_profile/:patient_id" element={
           <RouteTransition>
-            <PatientsProfile />
           </RouteTransition>
         } />
         <Route path="/doctors" element={<Doctors />} />

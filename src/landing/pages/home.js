@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Dialog } from '@headlessui/react'
 import { Link } from "react-router-dom";
 import "./home.css"
-import Main from "../components/main";
-import Services from "../components/services";
-import Contact from "../components/contact";
-import Team from "../components/team";
-import About_us from "../components/about_us";
+import Main from "../components/Home/main";
+import Services from "../components/Home/services";
+import Contact from "../components/Home/contact";
+import Team from "../components/Home/team";
+import About_us from "../components/Home/about_us";
 import AnchorLink from 'react-anchor-link-smooth-scroll'
 import logo from "../../images/Logo.png"
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'

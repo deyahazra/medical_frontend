@@ -1,12 +1,9 @@
-
 import React, { useState } from "react";
 import PermanentDrawerLeft from "../components/sidebar";
 import "./doctor.css"
-import Profile from "../components/profile";
-import Patients from "../components/patients";
-import Dashboard from "../components/dashboard";
-import Yoga from "../components/yoga";
-import Mental from "../components/Mental";
+import Profile from "../components/Profile/profile";
+import Dashboard from "../components/Dashboard/dashboard";
+
 
 const Doctors = () => {
     const [activeButton, setActiveButton] = React.useState('');
