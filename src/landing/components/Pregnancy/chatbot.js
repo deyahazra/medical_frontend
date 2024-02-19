@@ -4,7 +4,7 @@ import pregbg from "../../../images/pregbg.png"
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
 const Chatbot = () => {
-    // const API_KEY = "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";
+  // const API_KEY = process.env.REACT_APP_API_KEY;
     const API_KEY="abcd"
     const systemMessage = { //  Explain things like you're talking to a software professional with 5 years of experience.
         "role": "system", "content": "Explain things like you're talking to a pregnent lady."
@@ -68,7 +68,7 @@ const Chatbot = () => {
       console.log(data);
       setMessages([...chatMessages, {
         message: data.choices[0].message.content,
-        sender: "ChatGPT"
+        sender: "PregGPT"
       }]);
       setIsTyping(false);
     });
