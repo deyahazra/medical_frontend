@@ -8,6 +8,7 @@ import deya from "../../../images/Deya hazra pic.webp"
 import utsav from "../../../images/Utsav_pic.jpg"
 import ssr from "../../../images/ssr_pic.jpg"
 import EmailIcon from '@mui/icons-material/Email';
+import atrij from "../../../images/atrij.jpg"
 const people = [
     {
       id: 1,
@@ -40,11 +41,11 @@ const people = [
         id: 4,
         name: 'Atrij Paul',
         role: 'Co-Founder / CEO',
-        hrefG: 'https://github.com/deyahazra',
-        hrefL: 'https://www.linkedin.com/in/deya-hazra-51a23222a/',
-        hrefM: 'mailto:deyahazra28@gmail.com',
+        hrefG: 'https://github.com/Atrij-Paul',
+        hrefL: 'https://www.linkedin.com/in/atrij-paul-9a23a6223/',
+        hrefM: 'atrijpaul2003@gmail.com',
         imageUrl:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+          atrij
       },
     // More people...
   ]

@@ -15,6 +15,7 @@ import CommunityGeneral from './landing/components/Community/communityGen';
 import CommunityEpidemic from './landing/components/Community/communityEpi';
 import CommunityPandemic from './landing/components/Community/communityPan';
 import CommunityPregnency from './landing/components/Community/communityPreg';
+import Chat_Mental from './landing/components/Mental/chat_mental';
 
 const RouteTransition = ({ children }) => {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/voice_mental" element={<Voice_Mental />} />
+        <Route path="/chat_mental" element={<Chat_Mental />} />
         <Route path="/yoga" element={<Yoga/>}/>
         <Route path="/pregnency" element={<Pregency/>}/>
         <Route path="/community/general" element={<CommunityGeneral/>}/>

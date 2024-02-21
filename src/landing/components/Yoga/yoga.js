@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import "./yoga.css"
+import { useRef } from "react";
 import yogaimg from "../../../images/yoga.gif"
 import heading from "../../../images/heading.png"
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,12 @@ import bridgePose from "../../../images/bridge.webp"
 import standingForwardBend from "../../../images/sfb.webp"
 import puppyPose from "../../../images/puppy.jpg"
 import ploughPose from "../../../images/plough.jpg"
+import Modal_Try from "./modal_try";
+import { useHttpClient } from "../../../shared/components/hooks/http-hook";
+import { AuthContext } from '../../../shared/context/auth-context';
+import { useContext } from "react";
+import { useEffect } from "react";
+import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
 const yoga = [
   {
     id: 1,
@@ -90,12 +97,72 @@ const yoga = [
   },
 ];
 const Yoga = () => {
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext);
+  const val = localStorage.getItem('refresh');
+  const [refresh2, setRefresh2] = useState(0);
+  const [bodypart, setBodypart] = useState('');
+  const [reason, setReason] = useState('');
   const navigate = useNavigate();
-  // const [openModal, setOpenModal] = useState(false)
-    // const cancelButtonRef = useRef(null)
+  const [rec, setRec] = useState([]);
+  const [openModal, setOpenModal] = useState(false)
+    const cancelButtonRef = useRef(null)
+    const handleApi = async () => {
+      try {
+        const data = {
+          'first': bodypart,
+          'second': reason,
+      };
+      console.log(typeof(bodypart));
+      console.log(data);
+
+          const response=await sendRequest(
+              `https://med-ai-api.onrender.com/yoga`,
+              'POST',
+              JSON.stringify(data),
+              {
+                  'Content-Type': 'application/json',
+              }
+              );
+              setRefresh2(refresh2+1);
+              localStorage.setItem('refresh2', refresh2);
+              console.log(response);
+              setOpenModal(false);
+              } catch (err) {
+                  console.log(err);
+                  }
+          };
+  
+
     const handleYoga = (yogaName) => {
       navigate('/yoga_cam', { state: { yogaName } });
     }
+    useEffect(() => {
+      const fetchRec = async () => {
+        try {
+          const responseData = await sendRequest(
+            `https://med-ai-api.onrender.com/get_yoga_recommendations`,
+            'GET',
+            null,
+            {
+              'Content-Type': 'application/json',
+            }
+          );
+          setRec(responseData);
+          console.log(responseData);
+        } 
+        catch (err) {
+          console.log(err);
+        }
+      };
+      fetchRec();
+    }
+    , [refresh2]);
+    console.log(refresh2);
+    if (rec.length > 0) {
+      console.log(rec);
+  }
+    // const randomRec = [...rec].sort(() => 0.5 - Math.random()).slice(0, 3);
     return (
         <>
     <section className="overflow-hidden yogabox sm:grid sm:grid-cols-2 sm:items-center p-16">
@@ -158,7 +225,104 @@ const Yoga = () => {
   </div>
             ))}
 </div>
+
+
+
+<div class="max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+    <div class="max-w-xl">
+      <h2 class="text-3xl font-bold sm:text-4xl">Dont know where to start? Check our recomendation.</h2>
+    </div>
+
+            <div className="relative transform overflow-hidden rounded-lg bg-yellow-200 bg-opacity-10  text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div className=" px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start">
+                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <div
+                      as="h3" 
+                      className="text-base font-bold leading-6 text-gray-900" 
+                      style={{ fontSize: '24px', textAlign: 'center' }} // Add this line
+                  >
+                      Fill this to get recomendation
+                    </div>
+                  <label htmlFor="HeadlineAct" className="mt-2 mb-2  block text-sm font-medium text-gray-900"> Which body part are you targeting? </label>
+                  <select
+                    value={bodypart}
+                    onChange={(e) => setBodypart(e.target.value)}
+                    name="HeadlineAct"
+                    id="HeadlineAct"
+                    className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-600 sm:text-sm"
+                  >
+                    <option value="">Please select body part</option>
+                    <option value="shoulders">Shoulders</option>
+                    <option value="legs">Legs</option>
+                    <option value="neck">Neck</option>
+                    <option value="knee">Knee</option>
+                  </select>
+                  <label htmlFor="HeadlineAct" className="mt-2 mb-2 block text-sm font-medium text-gray-900"> Reason </label>
+                  <select
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    name="HeadlineAct"
+                    id="HeadlineAct"
+                    className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-600 sm:text-sm"
+                  >
+                    <option value="">Please select Reason</option>
+                    <option value="stiff">Stiffness</option>
+                    <option value="pain">Pain</option>
+                    <option value="weightloss">Weightloss</option>
+                  </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-yellow-200 bg-opacity-10 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 sm:ml-3 sm:w-auto"
+                    onClick={handleApi}
+                  >
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+
+
+
+    <div class="mt-8 grid grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 md:gap-12 lg:grid-cols-3">
+      <div class="flex items-start gap-4">
+      {rec.length ==7 &&
+        <div className="bg-yellow-800 bg-opacity-10 h-32 w-64">
+           <h2 className="text-lg font-bold">{rec[0]}</h2>
+        </div>
+      }
+      </div>
+
+      <div class="flex items-start gap-4">
+
+      {rec.length ==7 &&
+        <div className="bg-yellow-800 bg-opacity-10 h-32 w-64">
+           <h2 className="text-lg font-bold">{rec[1]}</h2>
+        </div>
+      }
+      </div>
+
+      <div class="flex items-start gap-4">
+      {rec.length ==7 &&
+        <div className="bg-yellow-800 bg-opacity-10 h-32 w-64">
+           <h2 className="text-lg font-bold">{rec[2]}</h2>
+        </div>
+      }
+      </div>
+    </div>
+  </div>
 </section>
+
 </>
     )
 }

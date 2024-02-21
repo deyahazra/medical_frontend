@@ -107,3 +107,20 @@
     transform: translate(-50%, -50%);
     opacity: 0.3;
   }
+  .mychat{
+    background-color: #3b1d09c3;
+  }
+  .chatmain{
+    background-color: #3b1d09c3;
+  }
+  .sc-message--outgoing .sc-message--content {
+    background-color: #3b1d09c3 !important;
+  }
+  
+  /* For incoming messages */
+  .sc-message--incoming .sc-message--content {
+    background-color: #3b1d09c3 !important;
+  }
+  .custom-message .sc-message--content {
+    background-color: #3b1d09c3;
+  }

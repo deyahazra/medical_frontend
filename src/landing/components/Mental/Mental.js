@@ -39,13 +39,15 @@ const Mental = () => {
       <div className="lg:col-span-2 lg:py-8">
         <ul className="grid grid-cols-2 gap-10 ">
           <li >
-            <a href="#" className="group block">
+            <div className="group block">
+              <Link to="/chat_mental">
               <img
                 src={chat}
                 alt=""
                 className="aspect-square w-full rounded object-cover transform transition duration-500 ease-in-out hover:scale-105"
               />
-            </a>
+              </Link>
+            </div>
           </li>
 
           <li>
