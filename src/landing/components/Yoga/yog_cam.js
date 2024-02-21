@@ -68,7 +68,7 @@ const Yog_cam = () => {
             ws.addEventListener('open', () => {
               setIsLoading(false);
                 console.log('WebSocket connection established');
-                ws.send('cobra')
+                ws.send(yogaNames)
                 setConnection(true);
                 video.addEventListener('play', () => {
                   const canvasx = document.createElement('canvas');
@@ -83,7 +83,7 @@ const Yog_cam = () => {
                       fetch(imageData)
                           .then(res => res.blob())
                           .then(blob => ws.send(blob)); // Send the blob to the server
-                  }, 500); // Adjust the interval as needed
+                  }, 400); // Adjust the interval as needed
               });
             });
 
