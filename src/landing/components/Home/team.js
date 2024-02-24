@@ -43,7 +43,7 @@ const people = [
         role: 'Co-Founder / CEO',
         hrefG: 'https://github.com/Atrij-Paul',
         hrefL: 'https://www.linkedin.com/in/atrij-paul-9a23a6223/',
-        hrefM: 'atrijpaul2003@gmail.com',
+        hrefM: 'mailto:atrijpaul2003@gmail.com',
         imageUrl:
           atrij
       },

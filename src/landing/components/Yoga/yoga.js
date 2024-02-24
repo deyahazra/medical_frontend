@@ -295,13 +295,13 @@ const Yoga = () => {
 
 
     <div class="mt-8 grid grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 md:gap-12 lg:grid-cols-3">
-      <div class="flex items-start gap-4">
-      {rec.length ==7 &&
-        <div className="bg-yellow-800 bg-opacity-10 h-32 w-64">
-           <h2 className="text-lg font-bold">{rec[0]}</h2>
-        </div>
-      }
-      </div>
+    <div class="flex items-start gap-3">
+    <div className='bg-yellow-800 bg-opacity-10 benefit2' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    {rec.length ==7 &&
+        <h2 class="ml-4 mr-4 text-lg font-bold">{rec[0]}</h2>
+        }
+    </div>
+  </div>
 
       <div class="flex items-start gap-4">
 
