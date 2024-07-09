@@ -5,7 +5,7 @@
     width: 90%;
     position: relative;
     left:8rem;
-    background-color: #FF66C4;
+    background-color: #A3D3FF;
     /* Picture/Big */
 }
 
@@ -34,7 +34,7 @@
     }
 }
 .team{
-    background-color: #e772a6bc
+    background-color: #A3D3FF
 }
 .main{
     padding-right: 0px;
@@ -43,7 +43,7 @@
     background-color: ivory;
 }
 .services{
-    background-color: #e772a6bc;
+    background-color: #A3D3FF;
 }
 .member{
     background-color: ivory;
