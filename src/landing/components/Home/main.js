@@ -2,7 +2,7 @@ import React from "react";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { Link } from "react-router-dom";
 import "../../pages/home.css"
-import block from "../../../images/Doc.png"
+import block from "../../../images/fashion.png"
 const Main = () => {
     const auth = React.useContext(AuthContext);
     return (

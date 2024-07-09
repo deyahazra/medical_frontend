@@ -81,7 +81,7 @@ export default function SignInSide() {
         else {
             try {
                 const responseData = await sendRequest(
-                    "https://medvita-auth-api.onrender.com/api/auth/signup",
+                    "http://localhost:8000/api/auth/signup",
                     "POST",
                     JSON.stringify({
                         name: formState.inputs.name.value,
